@@ -1,6 +1,7 @@
 # SANDALBOYZ 2018 Web Store
 
 ![SpongeBob](./spongebob.jpg)
+
 This is a MoDeRn WeB aPpLiCaTiOn, built with [Gatsby](https://www.gatsbyjs.org/).
 
 ## Developing
