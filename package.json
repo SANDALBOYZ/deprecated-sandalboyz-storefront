@@ -25,6 +25,7 @@
     ]
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "emotion": "^9.1.3",
     "emotion-server": "^9.1.3",
     "gatsby": "^1.9.247",
@@ -36,10 +37,12 @@
     "gatsby-source-shopify-storefront": "^1.0.0",
     "global": "^4.3.2",
     "react-emotion": "^9.1.3",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "typography": "^0.16.17"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
+    "eslint-plugin-emotion": "^9.1.0",
     "eslint-plugin-flowtype": "^2.49.3",
     "flow-bin": "^0.73.0",
     "prettier": "^1.12.0",

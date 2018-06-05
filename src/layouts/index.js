@@ -2,30 +2,59 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 // Components
-import Header from '../components/header'
+import Header from 'src/components/Header'
 // Styles
-import './reset.css'
+import 'src/styles'
+
+export const Context = React.createContext({
+  bag: []
+})
 
 type Props = {
   children: Function,
   data: any
 }
 
-const Layout = ({ children, data }: Props) => (
-  <div>
-    <Helmet
-      title={data.site.siteMetadata.title}
-      meta={[
-        { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' }
-      ]}
-    />
-    <Header siteTitle={data.site.siteMetadata.title} />
-    <div>
-      {children()}
-    </div>
-  </div>
-)
+type State = {
+  bag: number,
+  addToBag: Function
+}
+
+class Layout extends React.Component<Props, State> {
+  constructor (props) {
+    super(props)
+
+    this.addToBag = this.addToBag.bind(this)
+
+    this.state = {
+      bag: [],
+      addToBag: this.addToBag
+    }
+  }
+
+  addToBag () {
+    const { bag } = this.state
+
+    this.setState({ bag: bag + 1 })
+  }
+
+  render () {
+    const { children, data } = this.props
+
+    return (
+      <Context.Provider value={this.state}>
+        <Helmet
+          title={data.site.siteMetadata.title}
+          // meta={}
+        />
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <div>
+          {children()}
+        </div>
+      </Context.Provider>
+    )
+  }
+}
 
 export default Layout
 
