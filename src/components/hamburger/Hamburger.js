@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import styled, { css } from 'react-emotion'
+import { Context } from 'src/layouts/index'
 
 export const Buns = styled('button')`
   display: flex;
@@ -49,24 +50,14 @@ export const Patties = styled('div')`
   }
 `
 
-class Hamburger extends React.Component {
-  state = {
-    active: false
-  }
-
-  toggleMenu = () => {
-    const { active } = this.state
-
-    this.setState({ active: !active })
-  }
-
-  render () {
-    return (
-      <Buns onClick={this.toggleMenu}>
-        <Patties active={this.state.active} />
+const Hamburger = () => (
+  <Context.Consumer>
+    {context => (
+      <Buns onClick={context.toggleMenu}>
+        <Patties active={context.menuOpen} />
       </Buns>
-    )
-  }
-}
+    )}
+  </Context.Consumer>
+)
 
 export default Hamburger
