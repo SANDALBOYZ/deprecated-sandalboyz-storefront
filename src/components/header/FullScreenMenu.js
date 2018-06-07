@@ -15,7 +15,7 @@ export const MenuContainer = styled('aside')`
 `
 
 export const Content = styled('nav')`
-  margin-top: 100px;
+  margin-top: ${({ yOffset = 0 }) => `${100 + yOffset}px`};
 `
 
 export const SearchBar = styled('div')`
@@ -27,7 +27,12 @@ export const MenuItem = styled('li')`
   list-style-type: none;
 `
 
-const FullScreenMenu = ({ isOpen }) => (
+type FullScreenMenuProps = {
+  isOpen: boolean,
+  yOffset: number
+}
+
+const FullScreenMenu = ({ isOpen, yOffset }: FullScreenMenuProps) => (
   <MenuContainer isOpen={isOpen} >
     <Content>
       <ul>
