@@ -17,6 +17,7 @@ export const Buns = styled('button')`
 `
 
 export const Patties = styled('div')`
+  position: relative;
   display: flex;
   top: 50%;
   transform: ${props => props.active ? 'rotate(45deg)' : 'none'};
@@ -25,7 +26,6 @@ export const Patties = styled('div')`
     : 'transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
   };
   &, &:before, &:after {
-    position: absolute;
     content: '';
     height: 3px;
     width: 100%;
@@ -33,6 +33,7 @@ export const Patties = styled('div')`
     border-radius: 5px;
   }
   &:before {
+    position: absolute;
     top: ${props => props.active ? 0 : '-6px'};
     opacity: ${props => props.active ? 0 : 1};
     transition: ${props => props.active
@@ -41,6 +42,7 @@ export const Patties = styled('div')`
     };
   }
   &:after {
+    position: absolute;
     top: ${props => props.active ? 0 : '6px'};
     transform: ${props => props.active ? 'rotate(-90deg)' : 'none'};
     transition: ${props => props.active

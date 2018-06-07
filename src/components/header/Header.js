@@ -11,8 +11,10 @@ import textLogo from 'src/assets/img/sandalboyz-text-logo.png'
 export const HeaderContainer = styled('header')`
   position: sticky;
   width: 100%;
-  top: 15px;
-  margin-top: 15px;
+  top: 0;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 0.6em 0.8em;
 `
 
 export const HeaderBar = styled('div')`
@@ -20,36 +22,31 @@ export const HeaderBar = styled('div')`
   justify-content: space-between;
   align-items: center;
   padding: 3px 5px;
-  margin: 0.6em 0.8em;
-  height: ${props => props.level === 'top' ? '100px' : '30px'};
+  height: 30px;
   background-color: ${props => props.level === 'hover'
-    ? 'rgba(0, 0, 0, 0.5)'
+    ? 'rgba(0, 0, 0, 0.3)'
     : 'rgba(0, 0, 0, 0)'
   };
-  transition: height 0.5s ease, background-color 0.25s 0.5s ease;
-`
-
-export const logoContainer = css`
-  position: relative;
-  height: 100%;
-  width: 100px;
+  border-radius: 3px;
+  transition: background-color 0.15s 0.25s ease;
 `
 
 export const CircleLogo = styled('div')`
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-image: url(${circleLogo});
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  height: 100px;
-  width: 100px;
-  transform: ${props => props.level === 'top' ? 'scale(1)' : 'scale(0)'};
+  height: 80px;
+  width: 80px;
   opacity: ${props => props.level === 'top' ? 1 : 0};
-  transition: transform 0.25s ease, opacity 0.15s 0.1s ease;
+  transition: opacity 0.15s 0.1s ease;
 `
 
 export const TextLogo = styled('div')`
-  position: absolute;
   background-image: url(${textLogo});
   background-position: center;
   background-size: contain;
@@ -66,9 +63,9 @@ export const Bag = styled('button')`
   outline: 0;
   border-radius: 50%;
   background-color: #000000;
-  height: 25px;
-  width: 25px;
-  line-height: 25px;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
   text-align: center;
   color: #FFFFFF;
 `
@@ -87,8 +84,8 @@ class Header extends React.Component {
   level () {
     const { yPosition } = this.state
     if (yPosition >= 0 && yPosition < 5) return 'top'
-    if (yPosition >= 5 && yPosition < 15) return 'scrolled'
-    if (yPosition >= 15) return 'hover'
+    if (yPosition >= 5 && yPosition < 30) return 'scrolled'
+    if (yPosition >= 30) return 'hover'
   }
 
   render () {
@@ -98,12 +95,12 @@ class Header extends React.Component {
           <HeaderContainer level={this.level()}>
             <HeaderBar level={this.level()}>
               <Hamburger />
-              <Link className={logoContainer} to='/'>
-                <CircleLogo level={this.level()} />
+              <Link to='/'>
                 <TextLogo level={this.level()} />
               </Link>
               <Bag onClick={context.addToBag}>{context.bag.length}</Bag>
             </HeaderBar>
+            <CircleLogo level={this.level()} />
             <div style={{ position: 'fixed', left: 0, top: '50%' }}>
               {window.scrollY}
             </div>

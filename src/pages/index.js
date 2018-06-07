@@ -3,6 +3,7 @@ import { css } from 'react-emotion'
 // import Link from 'gatsby-link'
 
 const className = css({
+  marginTop: '20px',
   height: '1000px',
   backgroundColor: 'lightgray'
 })
