@@ -4,6 +4,8 @@ import { Context } from 'src/layouts/index'
 // Components
 import Link from 'gatsby-link'
 import Hamburger from 'src/components/hamburger/Hamburger'
+import FloatingMenu from './FloatingMenu'
+import FullScreenMenu from './FullScreenMenu'
 // Assets
 import circleLogo from 'src/assets/img/sandalboyz-logo.png'
 import textLogo from 'src/assets/img/sandalboyz-text-logo.png'
@@ -15,6 +17,7 @@ export const HeaderContainer = styled('header')`
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 0.6em 0.8em;
+  z-index: 10;
 `
 
 export const HeaderBar = styled('div')`
@@ -33,7 +36,7 @@ export const HeaderBar = styled('div')`
 
 export const CircleLogo = styled('div')`
   position: absolute;
-  top: 50%;
+  top: 25px;
   left: 50%;
   transform: translate(-50%, -50%);
   background-image: url(${circleLogo});
@@ -92,19 +95,27 @@ class Header extends React.Component {
     return (
       <Context.Consumer>
         {context => (
-          <HeaderContainer level={this.level()}>
-            <HeaderBar level={this.level()}>
-              <Hamburger />
-              <Link to='/'>
-                <TextLogo level={this.level()} />
-              </Link>
-              <Bag onClick={context.addToBag}>{context.bag.length}</Bag>
-            </HeaderBar>
-            <CircleLogo level={this.level()} />
-            <div style={{ position: 'fixed', left: 0, top: '50%' }}>
-              {window.scrollY}
-            </div>
-          </HeaderContainer>
+          <React.Fragment>
+            <HeaderContainer level={this.level()}>
+              <HeaderBar level={this.level()}>
+                <Hamburger />
+                <Link to='/'>
+                  <TextLogo level={this.level()} />
+                </Link>
+                <Bag onClick={context.addToBag}>{context.bag.length}</Bag>
+              </HeaderBar>
+              <CircleLogo level={this.level()} />
+              { this.level() === 'hover' &&
+                <FloatingMenu isOpen={context.menuOpen} />
+              }
+              <div style={{ position: 'fixed', left: 0, top: '50%' }}>
+                {window.scrollY}
+              </div>
+            </HeaderContainer>
+            { this.level() === 'top' &&
+              <FullScreenMenu isOpen={context.menuOpen} />
+            }
+          </React.Fragment>
         )}
       </Context.Consumer>
     )
