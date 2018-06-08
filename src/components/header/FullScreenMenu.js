@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'react-emotion'
 // Components
+import SearchBar from './SearchBar'
 import SiteNav from './SiteNav'
 import SocialNav from './SocialNav'
 // Styles
@@ -23,33 +24,6 @@ export const MenuContent = styled('div')`
   margin-top: 120px;
 `
 
-export const SearchBarContainer = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid black;
-  margin-bottom: 2em;
-  padding: 2px 5px;
-  width: 100%;
-`
-
-export const SearchBar = styled('input')`
-  border: 0;
-  outline: 0;
-  background: none;
-  padding: 0;
-  font-family: serif;
-  font-style: italic;
-  font-size: 1.6em;
-  width: 100%;
-`
-
-export const SearchArrow = styled('button')`
-  &:after {
-    content: ">>"
-  }
-`
-
 type FullScreenMenuProps = {
   isOpen: boolean,
 }
@@ -58,10 +32,7 @@ const FullScreenMenu = ({ isOpen }: FullScreenMenuProps) => (
   isOpen &&
   <MenuContainer>
     <MenuContent>
-      <SearchBarContainer>
-        <SearchBar placeholder='Search' />
-        <SearchArrow />
-      </SearchBarContainer>
+      <SearchBar />
       <SiteNav />
       <SocialNav />
     </MenuContent>

@@ -26,12 +26,18 @@ export const HeaderBar = styled('div')`
   align-items: center;
   padding: 3px 5px;
   height: 30px;
-  background-color: ${props => props.level === 'hover'
-    ? 'rgba(0, 0, 0, 0.3)'
-    : 'rgba(0, 0, 0, 0)'
-  };
+  background-color: ${({ level, menuOpen, theme }) => {
+    if (level !== 'top' && menuOpen) return theme.offWhite
+    if (level === 'hover') return 'rgba(0, 0, 0, 0.3)'
+    else return 'rgba(0, 0, 0, 0)'
+  }};
   border-radius: 3px;
-  transition: background-color 0.15s 0.25s ease;
+  border-bottom-left-radius: ${({ menuOpen }) => menuOpen ? 0 : '3px'};
+  border-bottom-right-radius: ${({ menuOpen }) => menuOpen ? 0 : '3px'};
+  transition: ${({ menuOpen }) => menuOpen
+    ? 'background-color 0.3s ease'
+    : 'background-color 0.3s 0.15s ease'
+  };
 `
 
 export const CircleLogo = styled('div')`
@@ -97,7 +103,7 @@ class Header extends React.Component {
         {context => (
           <React.Fragment>
             <HeaderContainer level={this.level()}>
-              <HeaderBar level={this.level()}>
+              <HeaderBar level={this.level()} menuOpen={context.menuOpen}>
                 <Hamburger />
                 <Link to='/'>
                   <TextLogo level={this.level()} />

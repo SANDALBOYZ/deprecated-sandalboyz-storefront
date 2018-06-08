@@ -4,6 +4,8 @@ import Helmet from 'react-helmet'
 // Components
 import Header from 'src/components/header/Header'
 // Styles
+import { ThemeProvider } from 'emotion-theming'
+import * as theme from 'src/theme'
 import 'src/styles'
 
 export const Context = React.createContext({})
@@ -50,16 +52,18 @@ class Layout extends React.Component<Props, State> {
     const { children, data } = this.props
 
     return (
-      <Context.Provider value={this.state}>
-        <Helmet
-          title={data.site.siteMetadata.title}
-          // meta={}
-        />
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <div>
-          {children()}
-        </div>
-      </Context.Provider>
+      <ThemeProvider theme={theme}>
+        <Context.Provider value={this.state}>
+          <Helmet
+            title={data.site.siteMetadata.title}
+            // meta={}
+          />
+          <Header siteTitle={data.site.siteMetadata.title} />
+          <div>
+            {children()}
+          </div>
+        </Context.Provider>
+      </ThemeProvider>
     )
   }
 }

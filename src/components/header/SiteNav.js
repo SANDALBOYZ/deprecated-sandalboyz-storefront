@@ -25,7 +25,7 @@ export const SiteNavItem = styled(StyledLink)`
 const SiteNav = () => (
   <SiteNavContainer>
     <SiteNavItemContainer>
-      <SiteNavItem to='/'>Home</SiteNavItem>
+      <SiteNavItem to='/'>Home / Shop</SiteNavItem>
     </SiteNavItemContainer>
     <SiteNavItemContainer>
       <SiteNavItem to='/help'>Questions</SiteNavItem>
