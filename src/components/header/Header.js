@@ -108,12 +108,9 @@ class Header extends React.Component {
               { this.level() === 'hover' &&
                 <FloatingMenu isOpen={context.menuOpen} />
               }
-              <div style={{ position: 'fixed', left: 0, top: '50%' }}>
-                {window.scrollY}
-              </div>
             </HeaderContainer>
-            { this.level() === 'top' &&
-              <FullScreenMenu isOpen={context.menuOpen} />
+            { (this.level() === 'top' || this.level() === 'scrolled') &&
+              <FullScreenMenu isOpen={context.menuOpen} yPosition={this.state.yPosition} />
             }
           </React.Fragment>
         )}

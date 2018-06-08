@@ -5,5 +5,6 @@ injectGlobal`
     cursor: pointer;
     outline: 0;
     border: 0;
+    background: none;
   }
 `
