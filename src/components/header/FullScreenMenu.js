@@ -1,8 +1,11 @@
 // @flow
 import React from 'react'
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 // Components
-import Link from 'gatsby-link'
+import SiteNav from './SiteNav'
+import SocialNav from './SocialNav'
+// Styles
+import { fadeIn } from './animations.css'
 
 export const MenuContainer = styled('aside')`
   position: fixed;
@@ -12,9 +15,8 @@ export const MenuContainer = styled('aside')`
   width: 100%;
   padding: 15px;
   background-color: #FFFEF2;
-  opacity: ${({ isOpen }) => isOpen ? 1 : 0};
-  transition: opacity 0.25s cubic-bezier(.15, .95, .65, .85);
   z-index: 9;
+  animation: ${fadeIn} 0.25s cubic-bezier(.15, .95, .65, .85);
 `
 
 export const MenuContent = styled('div')`
@@ -34,7 +36,7 @@ export const SearchBarContainer = styled('div')`
 export const SearchBar = styled('input')`
   border: 0;
   outline: 0;
-  background-color: rgba(0, 0, 0, 0);
+  background: none;
   padding: 0;
   font-family: serif;
   font-style: italic;
@@ -44,31 +46,7 @@ export const SearchBar = styled('input')`
 
 export const SearchArrow = styled('button')`
   &:after {
-    content: '>>'
-  }
-`
-
-export const Nav = styled('nav')`
-
-`
-
-export const NavItemContainer = styled('div')`
-  text-transform: uppercase;
-  list-style-type: none;
-  font-size: 2em;
-`
-
-export const NavItemLink = ({ className, children, ...props }) => (
-  <Link className={className} {...props}>
-    {children}
-  </Link>
-)
-
-export const NavItem = styled(NavItemLink)`
-  text-decoration: none;
-  color: #000000;
-  &:hover {
-    text-decoration: underline;
+    content: ">>"
   }
 `
 
@@ -77,20 +55,15 @@ type FullScreenMenuProps = {
 }
 
 const FullScreenMenu = ({ isOpen }: FullScreenMenuProps) => (
-  <MenuContainer isOpen={isOpen}>
+  isOpen &&
+  <MenuContainer>
     <MenuContent>
       <SearchBarContainer>
         <SearchBar placeholder='Search' />
         <SearchArrow />
       </SearchBarContainer>
-      <Nav>
-        <NavItemContainer>
-          <NavItem to='/'>Home</NavItem>
-        </NavItemContainer>
-        <NavItemContainer>
-          <NavItem to='/help'>Questions</NavItem>
-        </NavItemContainer>
-      </Nav>
+      <SiteNav />
+      <SocialNav />
     </MenuContent>
   </MenuContainer>
 )
