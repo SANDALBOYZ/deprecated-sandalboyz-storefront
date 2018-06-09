@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 import { Context } from 'src/layouts/index'
 // Components
 import Link from 'gatsby-link'
@@ -9,6 +9,10 @@ import FullScreenMenu from './FullScreenMenu'
 // Assets
 import circleLogo from 'src/assets/img/sandalboyz-logo.png'
 import textLogo from 'src/assets/img/sandalboyz-text-logo.png'
+
+const TOP = 'top'
+const SCROLLED = 'scrolled'
+const HOVER = 'hover'
 
 export const HeaderContainer = styled('header')`
   position: sticky;
@@ -27,8 +31,8 @@ export const HeaderBar = styled('div')`
   padding: 3px 5px;
   height: 30px;
   background-color: ${({ level, menuOpen, theme }) => {
-    if (level !== 'top' && menuOpen) return theme.offWhite
-    if (level === 'hover') return 'rgba(0, 0, 0, 0.3)'
+    if (level !== TOP && menuOpen) return theme.offWhite
+    if (level === HOVER) return 'rgba(0, 0, 0, 0.3)'
     else return 'rgba(0, 0, 0, 0)'
   }};
   border-radius: 3px;
@@ -51,7 +55,7 @@ export const CircleLogo = styled('div')`
   background-repeat: no-repeat;
   height: 80px;
   width: 80px;
-  opacity: ${props => props.level === 'top' ? 1 : 0};
+  opacity: ${props => props.level === TOP ? 1 : 0};
   transition: opacity 0.15s 0.1s ease;
 `
 
@@ -62,8 +66,8 @@ export const TextLogo = styled('div')`
   background-repeat: no-repeat;
   height: 20px;
   width: 100px;
-  transform: ${props => props.level === 'top' ? 'scale(0)' : 'scale(1)'};
-  opacity: ${props => props.level === 'top' ? 0 : 1};
+  transform: ${props => props.level === TOP ? 'scale(0)' : 'scale(1)'};
+  opacity: ${props => props.level === TOP ? 0 : 1};
   transition: transform 0.25s ease, opacity 0.15s 0.1s ease;
 `
 
@@ -85,6 +89,8 @@ class Header extends React.Component {
   }
 
   componentDidMount () {
+    this.setState({ yPosition: window.scrollY })
+
     document.addEventListener('scroll', () => {
       this.setState({ yPosition: window.scrollY })
     })
@@ -92,9 +98,17 @@ class Header extends React.Component {
 
   level () {
     const { yPosition } = this.state
-    if (yPosition >= 0 && yPosition < 5) return 'top'
-    if (yPosition >= 5 && yPosition < 30) return 'scrolled'
-    if (yPosition >= 30) return 'hover'
+    if (yPosition >= 0 && yPosition < 5) return TOP
+    if (yPosition >= 5 && yPosition < 30) return SCROLLED
+    if (yPosition >= 30) return HOVER
+  }
+
+  shouldRenderFloatingMenu () {
+    return this.level() === HOVER
+  }
+
+  shouldRenderFullScreenMenu () {
+    return this.level() === TOP || this.level() === SCROLLED
   }
 
   render () {
@@ -108,15 +122,15 @@ class Header extends React.Component {
                 <Link to='/'>
                   <TextLogo level={this.level()} />
                 </Link>
-                <Bag onClick={context.addToBag}>{context.bag.length}</Bag>
+                <Bag onClick={context.addToBag}>{context.bag}</Bag>
               </HeaderBar>
               <CircleLogo level={this.level()} />
-              { this.level() === 'hover' &&
-                <FloatingMenu isOpen={context.menuOpen} />
+              { (this.shouldRenderFloatingMenu() && context.menuOpen) &&
+                <FloatingMenu />
               }
             </HeaderContainer>
-            { (this.level() === 'top' || this.level() === 'scrolled') &&
-              <FullScreenMenu isOpen={context.menuOpen} yPosition={this.state.yPosition} />
+            { (this.shouldRenderFullScreenMenu() && context.menuOpen) &&
+              <FullScreenMenu yPosition={this.state.yPosition} />
             }
           </React.Fragment>
         )}

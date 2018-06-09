@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import styled from 'react-emotion'
-import { fadeInLeftRight } from './animations.css'
+import { fadeInLeftRight } from './animations.css.js'
 
 export const SocialNavContainer = styled('nav')`
 

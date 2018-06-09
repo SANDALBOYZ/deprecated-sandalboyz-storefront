@@ -18,31 +18,29 @@ type Props = {
 type State = {
   menuOpen: boolean,
   bag: number,
+  toggleMenu: Function,
   addToBag: Function
 }
 
-class Layout extends React.Component<Props, State> {
-  constructor (props) {
-    super(props)
-
-    this.toggleMenu = this.toggleMenu.bind(this)
-    this.addToBag = this.addToBag.bind(this)
+class App extends React.Component<Props, State> {
+  constructor () {
+    super()
 
     this.state = {
       menuOpen: false,
-      bag: [],
+      bag: 0,
       toggleMenu: this.toggleMenu,
       addToBag: this.addToBag
     }
   }
 
-  toggleMenu () {
+  toggleMenu = () => {
     const { menuOpen } = this.state
 
     this.setState({ menuOpen: !menuOpen })
   }
 
-  addToBag () {
+  addToBag = () => {
     const { bag } = this.state
 
     this.setState({ bag: bag + 1 })
@@ -68,7 +66,7 @@ class Layout extends React.Component<Props, State> {
   }
 }
 
-export default Layout
+export default App
 
 export const query = graphql`
   query SiteTitleQuery {

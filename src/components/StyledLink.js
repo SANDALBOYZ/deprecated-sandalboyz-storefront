@@ -4,7 +4,7 @@ import Link from 'gatsby-link'
 
 type StyledLinkProps = {
   className?: string,
-  children?: React.Node
+  children?: any
 }
 
 export const StyledLink = ({

@@ -6,7 +6,7 @@ import SearchBar from './SearchBar'
 import SiteNav from './SiteNav'
 import SocialNav from './SocialNav'
 // Styles
-import { fadeIn } from './animations.css'
+import { fadeIn } from './animations.css.js'
 
 export const MenuContainer = styled('aside')`
   position: fixed;
@@ -24,12 +24,7 @@ export const MenuContent = styled('div')`
   margin-top: 120px;
 `
 
-type FullScreenMenuProps = {
-  isOpen: boolean,
-}
-
-const FullScreenMenu = ({ isOpen }: FullScreenMenuProps) => (
-  isOpen &&
+const FullScreenMenu = () => (
   <MenuContainer>
     <MenuContent>
       <SearchBar />

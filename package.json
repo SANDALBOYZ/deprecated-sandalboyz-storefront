@@ -18,6 +18,7 @@
   "standard": {
     "parser": "babel-eslint",
     "plugins": [
+      "emotion",
       "flowtype"
     ],
     "globals": [

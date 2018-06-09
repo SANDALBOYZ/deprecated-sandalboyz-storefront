@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'react-emotion'
 import StyledLink from 'src/components/StyledLink'
-import { fadeInLeftRight } from './animations.css'
+import { fadeInLeftRight } from './animations.css.js'
 
 export const SiteNavContainer = styled('nav')`
   margin-bottom: 2em;

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 import { Context } from 'src/layouts/index'
 
 export const Buns = styled('button')`

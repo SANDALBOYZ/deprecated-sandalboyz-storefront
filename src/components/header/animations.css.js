@@ -1,7 +1,7 @@
 import { keyframes } from 'react-emotion'
 
 export const fadeIn = keyframes`
-  from, 0%, to {
+  0% {
     opacity: 0;
   }
 
@@ -11,7 +11,7 @@ export const fadeIn = keyframes`
 `
 
 export const fadeInLeftRight = keyframes`
-  from, 0%, to {
+  0% {
     margin-left: -10px;
     opacity: 0;
   }
