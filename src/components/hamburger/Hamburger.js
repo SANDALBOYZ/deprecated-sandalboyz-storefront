@@ -24,7 +24,7 @@ export const Patties = styled('div')`
   transition: ${props => props.active
     ? 'transform 0.075s 0.12s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
     : 'transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
-  };
+};
   &, &:before, &:after {
     content: '';
     height: 3px;
@@ -37,18 +37,18 @@ export const Patties = styled('div')`
     top: ${props => props.active ? 0 : '-6px'};
     opacity: ${props => props.active ? 0 : 1};
     transition: ${props => props.active
-      ? 'top 0.075s ease, opacity 0.075s 0.12s ease'
-      : 'top 0.075s 0.12s ease, opacity 0.075s ease'
-    };
+    ? 'top 0.075s ease, opacity 0.075s 0.12s ease'
+    : 'top 0.075s 0.12s ease, opacity 0.075s ease'
+};
   }
   &:after {
     position: absolute;
     top: ${props => props.active ? 0 : '6px'};
     transform: ${props => props.active ? 'rotate(-90deg)' : 'none'};
     transition: ${props => props.active
-      ? 'top 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
-      : 'top 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
-    };
+    ? 'top 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
+    : 'top 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19)'
+};
   }
 `
 

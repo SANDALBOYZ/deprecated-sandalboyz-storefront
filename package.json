@@ -36,6 +36,7 @@
     "gatsby-plugin-emotion": "^1.1.17",
     "gatsby-plugin-react-helmet": "^2.0.10",
     "gatsby-plugin-react-next": "^1.0.11",
+    "gatsby-source-shopify": "^1.0.1",
     "gatsby-source-shopify-storefront": "^1.0.0",
     "global": "^4.3.2",
     "react-emotion": "^9.1.3",

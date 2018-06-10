@@ -57,7 +57,7 @@ class App extends React.Component<Props, State> {
             // meta={}
           />
           <Header siteTitle={data.site.siteMetadata.title} />
-          <div>
+          <div className='childrenContainer'>
             {children()}
           </div>
         </Context.Provider>

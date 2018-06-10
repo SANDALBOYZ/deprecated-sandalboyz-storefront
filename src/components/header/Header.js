@@ -41,7 +41,7 @@ export const HeaderBar = styled('div')`
   transition: ${({ menuOpen }) => menuOpen
     ? 'background-color 0.3s ease'
     : 'background-color 0.3s 0.15s ease'
-  };
+};
 `
 
 export const CircleLogo = styled('div')`
