@@ -9,4 +9,6 @@ This is a MoDeRn WeB aPpLiCaTiOn, built with [Gatsby](https://www.gatsbyjs.org/)
 
 ### Built With
 - Gatsby, https://www.gatsbyjs.org/
-- React
+- React, https://reactjs.org/
+- Flow, https://flow.org/
+- Emotion, https://emotion.sh/
