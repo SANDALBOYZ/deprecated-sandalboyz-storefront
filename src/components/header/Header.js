@@ -3,7 +3,8 @@ import styled from 'react-emotion'
 import { Context } from 'src/layouts/index'
 // Components
 import Link from 'gatsby-link'
-import Hamburger from 'src/components/hamburger/Hamburger'
+import Hamburger from './Hamburger'
+import Bag from './Bag'
 import FloatingMenu from './FloatingMenu'
 import FullScreenMenu from './FullScreenMenu'
 // Assets
@@ -38,10 +39,11 @@ export const HeaderBar = styled('div')`
   border-radius: 3px;
   border-bottom-left-radius: ${({ menuOpen }) => menuOpen ? 0 : '3px'};
   border-bottom-right-radius: ${({ menuOpen }) => menuOpen ? 0 : '3px'};
-  transition: ${({ menuOpen }) => menuOpen
-    ? 'background-color 0.3s ease'
-    : 'background-color 0.3s 0.15s ease'
-};
+  transition: ${({ menuOpen }) => {
+    return menuOpen
+      ? 'background-color 0.3s ease'
+      : 'background-color 0.3s 0.15s ease'
+  }};
 `
 
 export const CircleLogo = styled('div')`
@@ -69,18 +71,6 @@ export const TextLogo = styled('div')`
   transform: ${props => props.level === TOP ? 'scale(0)' : 'scale(1)'};
   opacity: ${props => props.level === TOP ? 0 : 1};
   transition: transform 0.25s ease, opacity 0.15s 0.1s ease;
-`
-
-export const Bag = styled('button')`
-  border: 0;
-  outline: 0;
-  border-radius: 50%;
-  background-color: #000000;
-  height: 24px;
-  width: 24px;
-  line-height: 24px;
-  text-align: center;
-  color: #FFFFFF;
 `
 
 class Header extends React.Component {
@@ -122,7 +112,7 @@ class Header extends React.Component {
                 <Link to='/'>
                   <TextLogo level={this.level()} />
                 </Link>
-                <Bag onClick={context.addToBag}>{context.bag}</Bag>
+                <Bag />
               </HeaderBar>
               <CircleLogo level={this.level()} />
               { (this.shouldRenderFloatingMenu() && context.menuOpen) &&

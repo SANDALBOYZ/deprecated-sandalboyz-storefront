@@ -1,23 +1,12 @@
-import React from 'react'
-import { css } from 'react-emotion'
-// import Link from 'gatsby-link'
+// @flow
+/**
+ * This root index will default to `products/index`.
+ */
 
-const className = css({
-  marginTop: '20px',
-  height: '1000px',
-  backgroundColor: 'lightgray'
-})
+export default from './products'
 
-const IndexPage = ({ data }) => {
-  console.log(data)
-
-  return (
-    <div className={className}>
-      <h1>Hi people</h1>
-      <p>Welcome to the new SANDALBOYZ storefront.</p>
-      <p>It's still under construction if you couldn't tell.</p>
-    </div>
-  )
-}
-
-export default IndexPage
+export const query = graphql`
+  query IndexQuery {
+    ...ShopifyProductsFragment
+  }
+`

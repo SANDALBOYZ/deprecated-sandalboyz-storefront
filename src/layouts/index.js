@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import Helmet from 'react-helmet'
+import styled from 'react-emotion'
 // Components
 import Header from 'src/components/header/Header'
 // Styles
@@ -9,6 +10,10 @@ import * as theme from 'src/theme'
 import 'src/styles'
 
 export const Context = React.createContext({})
+
+export const ChildrenContainer = styled('div')`
+  padding: 1.2em;
+`
 
 type Props = {
   children: Function,
@@ -57,9 +62,9 @@ class App extends React.Component<Props, State> {
             // meta={}
           />
           <Header siteTitle={data.site.siteMetadata.title} />
-          <div className='childrenContainer'>
+          <ChildrenContainer>
             {children()}
-          </div>
+          </ChildrenContainer>
         </Context.Provider>
       </ThemeProvider>
     )

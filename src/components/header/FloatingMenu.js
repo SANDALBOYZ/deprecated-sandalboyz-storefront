@@ -22,7 +22,7 @@ export const MenuContainer = styled('aside')`
   width: 100%;
   height: 500px;
   padding: 40px 20px;
-  background-color: #FFFEF2;
+  background-color: ${({ theme }) => theme.offWhite};
   animation: ${fadeIn} 0.5s cubic-bezier(.15, .95, .65, .85) 0.25s;
   border-radius: 0 0 3px 3px;
 `

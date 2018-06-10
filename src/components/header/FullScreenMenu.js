@@ -15,7 +15,7 @@ export const MenuContainer = styled('aside')`
   height: 100%;
   width: 100%;
   padding: 15px;
-  background-color: #FFFEF2;
+  background-color: ${({theme}) => theme.offWhite};
   z-index: 9;
   animation: ${fadeIn} 0.25s cubic-bezier(.15, .95, .65, .85);
 `

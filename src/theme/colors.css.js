@@ -1,1 +1,2 @@
-export const offWhite = '#FFFEF2'
+
+export const offWhite = '#fffcf4'
