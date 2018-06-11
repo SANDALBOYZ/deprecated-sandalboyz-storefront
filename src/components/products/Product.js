@@ -29,18 +29,18 @@ export const ProductPrice = styled('span')`
 `
 
 type ProductProps = {
-  id: string | number,
+  handle: string,
   title: string,
   imageSrc: string,
   price: string
 }
 
-const Product = ({ id, title, imageSrc, price }: ProductProps) => {
+const Product = ({ handle, title, imageSrc, price }: ProductProps) => {
   // NOTE: This is hardcoded for now. Will need to change later.
   const currency = 'USD'
 
   return (
-    <ProductContainer to={`/products/${id}`}>
+    <ProductContainer to={`/products/${handle}`}>
       <img src={imageSrc} />
       <div>
         <ProductTitle>{title}</ProductTitle>

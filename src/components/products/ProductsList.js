@@ -26,7 +26,7 @@ const ProductsList = ({ data }) => (
       data.allShopifyProduct.edges.map(({ node: product }) => (
         <Product
           key={product.id}
-          id={product.id}
+          handle={product.handle}
           title={product.title}
           imageSrc={product.images[0].originalSrc}
           price={product.variants[0].price}

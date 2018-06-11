@@ -12,6 +12,7 @@ export const shopifyProductsFragment = graphql`
       edges {
         node {
           id
+          handle
           title
           variants {
             price
