@@ -1,11 +1,18 @@
 // @flow
 import React from 'react'
 import styled from 'react-emotion'
+import StyledLink from 'src/components/StyledLink'
 
 export const normalizePrice = (priceString: string): string =>
   priceString.split('.')[0]
 
-export const ProductContainer = styled('div')``
+export const ProductContainer = styled(StyledLink)`
+  text-decoration: none;
+  color: #000000;
+  &:hover {
+    color: ${({ theme }) => theme.grayLight}
+  }
+`
 
 export const ProductDescription = styled('div')``
 
@@ -21,18 +28,18 @@ export const ProductPrice = styled('span')`
   font-weight: bold;
 `
 
-const Product = ({ title, imageSrc, price }) => {
+const Product = ({ id, title, imageSrc, price }) => {
   // NOTE: This is hardcoded for now. Will need to change later.
   const currency = 'USD'
 
   return (
-    <div>
+    <ProductContainer to={`/products/${id}`}>
       <img src={imageSrc} />
       <div>
         <ProductTitle>{title}</ProductTitle>
         <ProductPrice>{normalizePrice(String(price))} {currency}</ProductPrice>
       </div>
-    </div>
+    </ProductContainer>
   )
 }
 

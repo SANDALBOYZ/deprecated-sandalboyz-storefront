@@ -13,7 +13,7 @@ export const Buns = styled('button')`
   outline: 0;
   padding: 0;
   height: 25px;
-  width: 25px;
+  width: 24px;
 `
 
 export const Patties = styled('div')`
@@ -29,7 +29,7 @@ export const Patties = styled('div')`
     content: '';
     height: 3px;
     width: 100%;
-    background-color: #000000;
+    background-color: ${({ theme }) => theme.grayDark};
     border-radius: 5px;
   }
   &:before {

@@ -7,12 +7,17 @@ export const BagButton = styled('button')`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 26px;
-  height: 26px;
-  background-color: #000000;
+  width: 25px;
+  height: 25px;
+  background-color: ${({ theme, menuOpen }) => {
+    return menuOpen
+      ? theme.grayLight
+      : theme.grayDark
+  }};
   border-radius: 50%;
   border: 0;
   outline: 0;
+  transition: background-color 2s ease;
 `
 
 export const BagCount = styled('span')`
@@ -23,7 +28,7 @@ export const BagCount = styled('span')`
 const Bag = () => (
   <Context.Consumer>
     {context => (
-      <BagButton onClick={context.addToBag}>
+      <BagButton onClick={context.addToBag} menuOpen={context.menuOpen}>
         <BagCount>{context.bag}</BagCount>
       </BagButton>
     )}

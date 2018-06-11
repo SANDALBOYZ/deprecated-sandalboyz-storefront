@@ -29,11 +29,11 @@ export const HeaderBar = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3px 5px;
-  height: 30px;
+  padding: 4px 5px;
+  height: 32px;
   background-color: ${({ level, menuOpen, theme }) => {
     if (level !== TOP && menuOpen) return theme.offWhite
-    if (level === HOVER) return 'rgba(0, 0, 0, 0.3)'
+    if (level === HOVER) return 'rgba(0, 0, 0, 0.15)'
     else return 'rgba(0, 0, 0, 0)'
   }};
   border-radius: 3px;
