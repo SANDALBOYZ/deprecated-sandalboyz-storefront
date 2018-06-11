@@ -11,7 +11,12 @@ export const Synopsis = styled('div')`
   font-size: 1.3em;
 `
 
-const ProductsPageSynopsis = ({ title, synopsis }) => (
+type ProductsPageSynopsisProps = {
+  title: string,
+  synopsis: string
+}
+
+const ProductsPageSynopsis = ({ title, synopsis }: ProductsPageSynopsisProps) => (
   <div>
     <Title>{title}</Title>
     <Synopsis>{synopsis}</Synopsis>

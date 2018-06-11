@@ -3,8 +3,7 @@
  * This is the "All" products page.
  */
 import React from 'react'
-import ProductsPageSynopsis from 'src/components/products/ProductsPageSynopsis'
-import Product from 'src/components/products/Product'
+import ProductsList, { ProductsPageSynopsis } from 'src/components/products'
 
 // Export this `fragment` so that it can be reused.
 export const shopifyProductsFragment = graphql`
@@ -32,19 +31,7 @@ const ProductsPage = ({ data }) => (
       title='All'
       synopsis='Anything and everything under the SANDALBOYZ sun.'
     />
-    <div className='productsContainer'>
-      {
-        data.allShopifyProduct.edges.map(({ node: product }) => (
-          <Product
-            key={product.id}
-            id={product.id}
-            title={product.title}
-            imageSrc={product.images[0].originalSrc}
-            price={product.variants[0].price}
-          />
-        ))
-      }
-    </div>
+    <ProductsList data={data} />
   </React.Fragment>
 )
 

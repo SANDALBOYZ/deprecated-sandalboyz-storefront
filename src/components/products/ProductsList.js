@@ -1,0 +1,39 @@
+// @flow
+import React from 'react'
+import styled from 'react-emotion'
+// Components
+import Product from './Product'
+
+export const ProductsListContainer = styled('div')`
+  @keyframes fadeInTopBottom {
+    0% {
+      margin-top: -10px;
+      opacity: 0;
+    }
+
+    100% {
+      margin-top: 0;
+      opacity: 1;
+    }
+  }
+
+  animation: fadeInTopBottom 1s ease;
+`
+
+const ProductsList = ({ data }) => (
+  <ProductsListContainer>
+    {
+      data.allShopifyProduct.edges.map(({ node: product }) => (
+        <Product
+          key={product.id}
+          id={product.id}
+          title={product.title}
+          imageSrc={product.images[0].originalSrc}
+          price={product.variants[0].price}
+        />
+      ))
+    }
+  </ProductsListContainer>
+)
+
+export default ProductsList

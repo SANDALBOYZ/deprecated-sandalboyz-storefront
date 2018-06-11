@@ -35,6 +35,7 @@ class App extends React.Component<Props, State> {
       menuOpen: false,
       bag: 0,
       toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
       addToBag: this.addToBag
     }
   }
@@ -44,6 +45,8 @@ class App extends React.Component<Props, State> {
 
     this.setState({ menuOpen: !menuOpen })
   }
+
+  closeMenu = () => { this.setState({ menuOpen: false }) }
 
   addToBag = () => {
     const { bag } = this.state

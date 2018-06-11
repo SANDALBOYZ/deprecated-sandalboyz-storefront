@@ -28,7 +28,14 @@ export const ProductPrice = styled('span')`
   font-weight: bold;
 `
 
-const Product = ({ id, title, imageSrc, price }) => {
+type ProductProps = {
+  id: string | number,
+  title: string,
+  imageSrc: string,
+  price: string
+}
+
+const Product = ({ id, title, imageSrc, price }: ProductProps) => {
   // NOTE: This is hardcoded for now. Will need to change later.
   const currency = 'USD'
 

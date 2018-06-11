@@ -1,7 +1,8 @@
+// @flow
 import React from 'react'
 import styled from 'react-emotion'
-import { Context } from 'src/layouts/index'
 // Components
+import { Context } from 'src/layouts/index'
 import Link from 'gatsby-link'
 import Hamburger from './Hamburger'
 import Bag from './Bag'
