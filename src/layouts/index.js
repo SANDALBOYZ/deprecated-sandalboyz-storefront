@@ -2,12 +2,26 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'react-emotion'
+// Apollo
+import client from 'src/api/client'
+import { ApolloProvider } from 'react-apollo'
+import gql from 'graphql-tag'
 // Components
 import Header from 'src/components/header/Header'
 // Styles
 import { ThemeProvider } from 'emotion-theming'
 import * as theme from 'src/theme'
 import 'src/styles'
+
+client.query({
+  query: gql`
+    {
+      shop {
+        name
+      }
+    }
+  `
+}).then(result => console.log('omg apollo worked', result))
 
 export const Context = React.createContext({})
 
@@ -58,18 +72,20 @@ class App extends React.Component<Props, State> {
     const { children, data } = this.props
 
     return (
-      <ThemeProvider theme={theme}>
-        <Context.Provider value={this.state}>
-          <Helmet
-            title={data.site.siteMetadata.title}
-            // meta={}
-          />
-          <Header siteTitle={data.site.siteMetadata.title} />
-          <ChildrenContainer>
-            {children()}
-          </ChildrenContainer>
-        </Context.Provider>
-      </ThemeProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <Context.Provider value={this.state}>
+            <Helmet
+              title={data.site.siteMetadata.title}
+              // meta={}
+            />
+            <Header siteTitle={data.site.siteMetadata.title} />
+            <ChildrenContainer>
+              {children()}
+            </ChildrenContainer>
+          </Context.Provider>
+        </ThemeProvider>
+      </ApolloProvider>
     )
   }
 }
