@@ -8,6 +8,7 @@ import { ApolloProvider } from 'react-apollo'
 import gql from 'graphql-tag'
 // Components
 import Header from 'src/components/header/Header'
+import BagMenu from 'src/components/bag/BagMenu'
 // Styles
 import { ThemeProvider } from 'emotion-theming'
 import * as theme from 'src/theme'
@@ -24,6 +25,23 @@ client.query({
 }).then(result => console.log('omg apollo worked', result))
 
 export const Context = React.createContext({})
+
+export const AppWrapper = styled('div')`
+  &:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.50);
+    z-index: 400;
+    opacity: ${({ bagOpen }) => bagOpen ? 1 : 0};
+    visibility: ${({ bagOpen }) => bagOpen ? 'visible' : 'hidden'};
+    transition: all 0.5s ease-in-out;
+  }
+`
 
 export const ChildrenContainer = styled('div')`
   padding: 1.2em;
@@ -50,6 +68,8 @@ class App extends React.Component<Props, State> {
       bag: 0,
       toggleMenu: this.toggleMenu,
       closeMenu: this.closeMenu,
+      toggleBag: this.toggleBag,
+      closeBag: this.closeBag,
       addToBag: this.addToBag
     }
   }
@@ -62,6 +82,14 @@ class App extends React.Component<Props, State> {
 
   closeMenu = () => { this.setState({ menuOpen: false }) }
 
+  toggleBag = () => {
+    const { bagOpen } = this.state
+
+    this.setState({ bagOpen: !bagOpen })
+  }
+
+  closeBag = () => { this.setState({ bagOpen: false }) }
+
   addToBag = () => {
     const { bag } = this.state
 
@@ -72,20 +100,25 @@ class App extends React.Component<Props, State> {
     const { children, data } = this.props
 
     return (
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
-          <Context.Provider value={this.state}>
-            <Helmet
-              title={data.site.siteMetadata.title}
-              // meta={}
-            />
-            <Header siteTitle={data.site.siteMetadata.title} />
-            <ChildrenContainer>
-              {children()}
-            </ChildrenContainer>
-          </Context.Provider>
-        </ThemeProvider>
-      </ApolloProvider>
+      <React.Fragment>
+        <Helmet
+          title={data.site.siteMetadata.title}
+          // meta={}
+        />
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={theme}>
+            <Context.Provider value={this.state}>
+              <AppWrapper bagOpen={this.state.bagOpen}>
+                <Header siteTitle={data.site.siteMetadata.title} />
+                <BagMenu isOpen={this.state.bagOpen} />
+                <ChildrenContainer>
+                  {children()}
+                </ChildrenContainer>
+              </AppWrapper>
+            </Context.Provider>
+          </ThemeProvider>
+        </ApolloProvider>
+      </React.Fragment>
     )
   }
 }

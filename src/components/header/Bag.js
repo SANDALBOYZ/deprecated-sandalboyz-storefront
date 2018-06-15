@@ -28,7 +28,7 @@ export const BagCount = styled('span')`
 const Bag = () => (
   <Context.Consumer>
     {context => (
-      <BagButton onClick={context.addToBag} menuOpen={context.menuOpen}>
+      <BagButton onClick={context.toggleBag} menuOpen={context.menuOpen}>
         <BagCount>{context.bag}</BagCount>
       </BagButton>
     )}
