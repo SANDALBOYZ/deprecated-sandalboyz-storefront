@@ -4,8 +4,8 @@ import styled from 'react-emotion'
 // Components
 import { Context } from 'src/layouts/index'
 import Link from 'gatsby-link'
+import { BagButton } from 'src/components/bag'
 import Hamburger from './Hamburger'
-import Bag from './Bag'
 import FloatingMenu from './FloatingMenu'
 import FullScreenMenu from './FullScreenMenu'
 // Assets
@@ -23,7 +23,7 @@ export const HeaderContainer = styled('header')`
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 0.6em 0.8em;
-  z-index: 10;
+  z-index: 1000;
 `
 
 export const HeaderBar = styled('div')`
@@ -113,7 +113,7 @@ class Header extends React.Component {
                 <Link to='/'>
                   <TextLogo level={this.level()} />
                 </Link>
-                <Bag />
+                <BagButton />
               </HeaderBar>
               <CircleLogo level={this.level()} />
               { (this.shouldRenderFloatingMenu() && context.menuOpen) &&

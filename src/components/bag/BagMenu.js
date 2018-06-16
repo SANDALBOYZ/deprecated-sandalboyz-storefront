@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'react-emotion'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { Context } from 'src/layouts/index'
+// Components
+import BagButton from './BagButton'
 
 export const BagMenuContainer = styled('aside')`
   position: fixed;
@@ -12,19 +14,26 @@ export const BagMenuContainer = styled('aside')`
   width: 80%;
   background-color: ${({ theme }) => theme.gray};
   transition: right 0.45s ease-in-out 0.05s;
-  z-index: 10;
+  z-index: 1000;
+  color: white;
+`
+
+export const BagMenuHeader = styled('div')`
+  padding: 10px;
+  margin-bottom: 10px;
 `
 
 const BagMenu = ({ isOpen }) => (
   <Context.Consumer>
     {context => (
-      <React.Fragment>
-        <OutsideClickHandler onOutsideClick={context.closeBag}>
-          <BagMenuContainer isOpen={isOpen}>
-            Bag
-          </BagMenuContainer>
-        </OutsideClickHandler>
-      </React.Fragment>
+      <OutsideClickHandler onOutsideClick={context.closeBag}>
+        <BagMenuContainer isOpen={isOpen}>
+          <BagMenuHeader>
+            <h2>Bag</h2>
+
+          </BagMenuHeader>
+        </BagMenuContainer>
+      </OutsideClickHandler>
     )}
   </Context.Consumer>
 )

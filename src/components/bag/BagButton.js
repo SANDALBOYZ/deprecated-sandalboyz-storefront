@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'react-emotion'
 import { Context } from 'src/layouts/index'
 
-export const BagButton = styled('button')`
+export const BagButtonContainer = styled('button')`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,14 +25,14 @@ export const BagCount = styled('span')`
   line-height: 24px;
 `
 
-const Bag = () => (
+const BagButton = () => (
   <Context.Consumer>
     {context => (
-      <BagButton onClick={context.toggleBag} menuOpen={context.menuOpen}>
+      <BagButtonContainer onClick={context.toggleBag} menuOpen={context.menuOpen}>
         <BagCount>{context.bag}</BagCount>
-      </BagButton>
+      </BagButtonContainer>
     )}
   </Context.Consumer>
 )
 
-export default Bag
+export default BagButton

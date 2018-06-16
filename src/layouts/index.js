@@ -36,7 +36,7 @@ export const AppWrapper = styled('div')`
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.50);
-    z-index: 400;
+    z-index: 900;
     opacity: ${({ bagOpen }) => bagOpen ? 1 : 0};
     visibility: ${({ bagOpen }) => bagOpen ? 'visible' : 'hidden'};
     transition: all 0.5s ease-in-out;
