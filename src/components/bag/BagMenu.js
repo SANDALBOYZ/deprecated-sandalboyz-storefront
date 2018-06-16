@@ -1,9 +1,9 @@
 // @flow
 import React from 'react'
 import styled from 'react-emotion'
+// Components
 import OutsideClickHandler from 'react-outside-click-handler'
 import { Context } from 'src/layouts/index'
-// Components
 import BagButton from './BagButton'
 
 export const BagMenuContainer = styled('aside')`
@@ -23,6 +23,14 @@ export const BagMenuHeader = styled('div')`
   margin-bottom: 10px;
 `
 
+export const BagMenuItemList = styled('ul')`
+
+`
+
+export const BagMenuItem = styled('li')`
+
+`
+
 const BagMenu = ({ isOpen }) => (
   <Context.Consumer>
     {context => (
@@ -30,8 +38,12 @@ const BagMenu = ({ isOpen }) => (
         <BagMenuContainer isOpen={isOpen}>
           <BagMenuHeader>
             <h2>Bag</h2>
-
           </BagMenuHeader>
+          <BagMenuItemList>
+            <BagMenuItem>Item 1</BagMenuItem>
+            <BagMenuItem>Item 2</BagMenuItem>
+            <BagMenuItem>Item 3</BagMenuItem>
+          </BagMenuItemList>
         </BagMenuContainer>
       </OutsideClickHandler>
     )}
