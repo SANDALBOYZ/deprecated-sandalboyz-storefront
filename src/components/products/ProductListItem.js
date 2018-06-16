@@ -28,14 +28,14 @@ export const ProductPrice = styled('span')`
   font-weight: bold;
 `
 
-type ProductProps = {
+type ProductListProps = {
   handle: string,
   title: string,
   imageSrc: string,
   price: string
 }
 
-const Product = ({ handle, title, imageSrc, price }: ProductProps) => {
+const ProductList = ({ handle, title, imageSrc, price }: ProductListProps) => {
   // NOTE: This is hardcoded for now. Will need to change later.
   const currency = 'USD'
 
@@ -50,4 +50,4 @@ const Product = ({ handle, title, imageSrc, price }: ProductProps) => {
   )
 }
 
-export default Product
+export default ProductList

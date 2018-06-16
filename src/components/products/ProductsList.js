@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'react-emotion'
 // Components
-import Product from './Product'
+import ProductListItem from './ProductListItem'
 
 export const ProductsListContainer = styled('div')`
   @keyframes fadeInTopBottom {
@@ -24,7 +24,7 @@ const ProductsList = ({ data }) => (
   <ProductsListContainer>
     {
       data.allShopifyProduct.edges.map(({ node: product }) => (
-        <Product
+        <ProductListItem
           key={product.id}
           handle={product.handle}
           title={product.title}

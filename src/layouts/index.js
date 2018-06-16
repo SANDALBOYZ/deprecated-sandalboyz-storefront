@@ -3,9 +3,8 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'react-emotion'
 // Apollo
-import client from 'src/api/client'
+import { client } from 'src/api'
 import { ApolloProvider } from 'react-apollo'
-import gql from 'graphql-tag'
 // Components
 import Header from 'src/components/header/Header'
 import BagMenu from 'src/components/bag/BagMenu'
@@ -13,16 +12,6 @@ import BagMenu from 'src/components/bag/BagMenu'
 import { ThemeProvider } from 'emotion-theming'
 import * as theme from 'src/theme'
 import 'src/styles'
-
-client.query({
-  query: gql`
-    {
-      shop {
-        name
-      }
-    }
-  `
-}).then(result => console.log('omg apollo worked', result))
 
 export const Context = React.createContext({})
 
@@ -55,6 +44,7 @@ type Props = {
 type State = {
   menuOpen: boolean,
   bag: number,
+  checkout?: Object,
   toggleMenu: Function,
   addToBag: Function
 }
@@ -66,12 +56,18 @@ class App extends React.Component<Props, State> {
     this.state = {
       menuOpen: false,
       bag: 0,
+      checkout: undefined,
       toggleMenu: this.toggleMenu,
       closeMenu: this.closeMenu,
       toggleBag: this.toggleBag,
       closeBag: this.closeBag,
-      addToBag: this.addToBag
+      addToBag: this.addToBag,
+      setCheckout: this.setCheckout
     }
+  }
+
+  componentDidMount () {
+
   }
 
   toggleMenu = () => {
@@ -94,6 +90,10 @@ class App extends React.Component<Props, State> {
     const { bag } = this.state
 
     this.setState({ bag: bag + 1 })
+  }
+
+  setCheckout = (checkout) => {
+    this.setState({ checkout })
   }
 
   render () {
