@@ -2,9 +2,7 @@
 import React from 'react'
 import styled from 'react-emotion'
 import StyledLink from 'src/components/StyledLink'
-
-export const normalizePrice = (priceString: string): string =>
-  priceString.split('.')[0]
+import { truncatePrice } from 'src/helpers'
 
 export const ProductContainer = styled(StyledLink)`
   text-decoration: none;
@@ -44,7 +42,7 @@ const ProductList = ({ handle, title, imageSrc, price }: ProductListProps) => {
       <img src={imageSrc} />
       <div>
         <ProductTitle>{title}</ProductTitle>
-        <ProductPrice>{normalizePrice(String(price))} {currency}</ProductPrice>
+        <ProductPrice>{truncatePrice(String(price))} {currency}</ProductPrice>
       </div>
     </ProductContainer>
   )

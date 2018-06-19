@@ -26,7 +26,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             id
             handle
             title
+            description
             variants {
+              id
+              title
+              availableForSale
               price
             }
             images {
