@@ -1,12 +1,16 @@
 // @flow
 import React from 'react'
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 import { get } from 'lodash'
 import { truncatePrice } from 'src/helpers'
 // Components
 import Select from 'react-select'
 // Styles
-import { gray, grayLight, grayDark } from 'src/theme'
+import { gray, grayLight } from 'src/theme'
+
+export const container = css`
+  padding: 0 5px;
+`
 
 export const ProductTitleContainer = styled('div')`
   margin-bottom: 15px;
@@ -14,9 +18,18 @@ export const ProductTitleContainer = styled('div')`
 
 export const ProductTitle = styled('h3')`
   margin: 0;
+  text-transform: uppercase;
 `
 
-const selectStyles = injectedData => ({
+export const ProductPrice = styled('span')`
+  font-size: 1.1rem;
+`
+
+type SelectStylesType = {
+  [string]: any
+}
+
+const selectStyles = (injectedData: SelectStylesType): Object => ({
   container: () => ({
     width: '60%',
     height: '30px'
@@ -51,7 +64,7 @@ const selectStyles = injectedData => ({
 
 export const AddToCartContainer = styled('div')`
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 `
 
 export const AddToCartButton = styled('button')`
@@ -61,10 +74,30 @@ export const AddToCartButton = styled('button')`
   border-left: 0;
   height: 30px;
   width: 40%;
+  &:hover {
+    border-color: ${({ theme }) => theme.grayDark};
+    background-color: ${({ theme }) => theme.grayDark};
+  }
+  &:active {
+    border-color: ${({ theme }) => theme.gray};
+    background-color: ${({ theme }) => theme.gray};
+  }
 `
 
 export const ProductDescription = styled('article')`
-  padding-left: 1em;
+  padding: 0 1em;
+  margin-bottom: 10px;
+  p {
+    margin-bottom: 1rem;
+  }
+`
+
+export const SizeChartButton = styled('button')`
+  text-transform: uppercase;
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 // `pathContext` comes from `gatsby-node.js`.
@@ -97,10 +130,10 @@ class ProductPageTemplate extends React.Component<ProductPageTemplateProps> {
             <img key={image.originalSrc} src={image.originalSrc} />
           ))
         }
-        <div>
+        <div className={container}>
           <ProductTitleContainer>
             <ProductTitle>{pathContext.title}</ProductTitle>
-            <span>{truncatePrice(pathContext.variants[0].price)} {currency}</span>
+            <ProductPrice>{truncatePrice(pathContext.variants[0].price)} {currency}</ProductPrice>
           </ProductTitleContainer>
           <AddToCartContainer>
             <Select
@@ -119,7 +152,8 @@ class ProductPageTemplate extends React.Component<ProductPageTemplateProps> {
             />
             <AddToCartButton>Add To Cart</AddToCartButton>
           </AddToCartContainer>
-          <ProductDescription>{pathContext.description}</ProductDescription>
+          <ProductDescription dangerouslySetInnerHTML={{ __html: pathContext.descriptionHtml }} />
+          <SizeChartButton>Size Chart</SizeChartButton>
         </div>
       </div>
     )

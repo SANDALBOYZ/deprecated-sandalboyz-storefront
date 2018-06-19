@@ -27,6 +27,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             handle
             title
             description
+            descriptionHtml
             variants {
               id
               title
