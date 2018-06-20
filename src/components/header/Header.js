@@ -23,7 +23,7 @@ export const HeaderContainer = styled('header')`
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 0.6em 0.8em;
-  z-index: 1000;
+  z-index: 800;
 `
 
 export const HeaderBar = styled('div')`
