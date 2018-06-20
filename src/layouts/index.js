@@ -2,6 +2,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'react-emotion'
+import type { CheckoutType } from './App.types'
 // Apollo
 import { client } from 'src/api'
 import { ApolloProvider } from 'react-apollo'
@@ -13,7 +14,7 @@ import { ThemeProvider } from 'emotion-theming'
 import * as theme from 'src/theme'
 import 'src/styles'
 
-export const Context = React.createContext({})
+export const Context = React.createContext()
 
 export const AppWrapper = styled('div')`
   &:before {
@@ -41,22 +42,15 @@ type Props = {
   data: any
 }
 
-type CheckoutType = {
-  id: string,
-  lineItems: Array<Object>,
-  subtotalPrice: string,
-  totalPrice: string,
-  totalTax: string,
-  webUrl: string,
-  __typename: 'Checkout'
-}
-
 type State = {
   menuOpen: boolean,
-  bag: number,
+  bagOpen: boolean,
   checkout?: CheckoutType,
   toggleMenu: Function,
-  addToBag: Function
+  closeMenu: Function,
+  toggleBag: Function,
+  closeBag: Function,
+  setCheckout: Function
 }
 
 class App extends React.Component<Props, State> {
@@ -65,13 +59,12 @@ class App extends React.Component<Props, State> {
 
     this.state = {
       menuOpen: false,
-      bag: 0,
+      bagOpen: false,
       checkout: undefined,
       toggleMenu: this.toggleMenu,
       closeMenu: this.closeMenu,
       toggleBag: this.toggleBag,
       closeBag: this.closeBag,
-      addToBag: this.addToBag,
       setCheckout: this.setCheckout
     }
   }
@@ -96,13 +89,7 @@ class App extends React.Component<Props, State> {
 
   closeBag = () => { this.setState({ bagOpen: false }) }
 
-  addToBag = () => {
-    const { bag } = this.state
-
-    this.setState({ bag: bag + 1 })
-  }
-
-  setCheckout = (checkout) => {
+  setCheckout = (checkout: CheckoutType) => {
     this.setState({ checkout })
   }
 
@@ -134,6 +121,8 @@ class App extends React.Component<Props, State> {
 }
 
 export default App
+
+declare var graphql: any
 
 export const query = graphql`
   query SiteTitleQuery {

@@ -5,6 +5,8 @@
 import React from 'react'
 import ProductsList, { ProductsPageSynopsis } from 'src/components/products'
 
+declare var graphql: any
+
 // Export this `fragment` so that it can be reused.
 export const shopifyProductsFragment = graphql`
   fragment ShopifyProductsFragment on RootQueryType {
@@ -26,7 +28,7 @@ export const shopifyProductsFragment = graphql`
   }
 `
 
-const ProductsPage = ({ data }) => (
+const ProductsPage = ({ data }: { data: any }) => (
   <React.Fragment>
     <ProductsPageSynopsis
       title='All'

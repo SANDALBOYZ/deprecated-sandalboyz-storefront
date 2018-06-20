@@ -6,7 +6,8 @@ export type PathContextType = {
   handle: string,
   title: string,
   images: Array<Object>,
-  variants: Array<Object>
+  variants: Array<Object>,
+  descriptionHtml: string
 }
 
 export type VariantType = {

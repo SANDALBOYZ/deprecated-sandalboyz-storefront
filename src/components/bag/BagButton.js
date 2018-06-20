@@ -26,11 +26,18 @@ export const BagCount = styled('span')`
   line-height: 24px;
 `
 
+const calculateQuantity = (edges: Array<Object>): number => (
+  edges.reduce((total, edge) => {
+    total += edge.node.quantity
+    return total
+  }, 0)
+)
+
 const BagButton = () => (
   <Context.Consumer>
     {context => (
       <BagButtonContainer onClick={context.toggleBag} menuOpen={context.menuOpen}>
-        <BagCount>{get(context.checkout, 'lineItems.edges.length', 0) || 0}</BagCount>
+        <BagCount>{calculateQuantity(get(context.checkout, 'lineItems.edges') || [])}</BagCount>
       </BagButtonContainer>
     )}
   </Context.Consumer>

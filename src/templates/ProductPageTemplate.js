@@ -2,8 +2,8 @@
 import React from 'react'
 import styled, { css } from 'react-emotion'
 import { get } from 'lodash'
-import { truncatePrice } from 'src/helpers'
-import {
+import { extractIdFromGatsbyId, truncatePrice } from 'src/helpers'
+import type {
   PathContextType,
   VariantType
 } from './ProductPageTemplate.types'
@@ -110,11 +110,13 @@ export const SizeChartButton = styled('button')`
 `
 
 type Props = {
-  pathContext: PathContextType
+  context: any,
+  pathContext: PathContextType,
+  checkoutLineItemsAdd: Function
 }
 
 type State = {
-  variant: VariantType
+  variant?: VariantType
 }
 
 class ProductPageTemplate extends React.Component<Props, State> {
@@ -129,7 +131,7 @@ class ProductPageTemplate extends React.Component<Props, State> {
   setVariant = (variant: VariantType) => { this.setState({ variant }) }
 
   addItemToCart = () => {
-    const variantId = this.state.variant.value.replace('Shopify__ProductVariant__', '')
+    const variantId = extractIdFromGatsbyId(get(this.state.variant, 'value'))
 
     this.props.checkoutLineItemsAdd({
       variables: {

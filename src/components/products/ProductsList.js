@@ -20,7 +20,7 @@ export const ProductsListContainer = styled('div')`
   animation: fadeInTopBottom 1s ease;
 `
 
-const ProductsList = ({ data }) => (
+const ProductsList = ({ data }: { data: any }) => (
   <ProductsListContainer>
     {
       data.allShopifyProduct.edges.map(({ node: product }) => (

@@ -74,7 +74,13 @@ export const TextLogo = styled('div')`
   transition: transform 0.25s ease, opacity 0.15s 0.1s ease;
 `
 
-class Header extends React.Component {
+type Props = {}
+
+type State = {
+  yPosition: number
+}
+
+class Header extends React.Component<Props, State> {
   state = {
     yPosition: 0
   }
