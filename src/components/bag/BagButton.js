@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import styled from 'react-emotion'
+import { get } from 'lodash'
 import { Context } from 'src/layouts/index'
 
 export const BagButtonContainer = styled('button')`
@@ -29,7 +30,7 @@ const BagButton = () => (
   <Context.Consumer>
     {context => (
       <BagButtonContainer onClick={context.toggleBag} menuOpen={context.menuOpen}>
-        <BagCount>{context.bag}</BagCount>
+        <BagCount>{get(context.checkout, 'lineItems.edges.length', 0) || 0}</BagCount>
       </BagButtonContainer>
     )}
   </Context.Consumer>

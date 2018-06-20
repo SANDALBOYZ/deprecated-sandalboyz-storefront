@@ -41,10 +41,20 @@ type Props = {
   data: any
 }
 
+type CheckoutType = {
+  id: string,
+  lineItems: Array<Object>,
+  subtotalPrice: string,
+  totalPrice: string,
+  totalTax: string,
+  webUrl: string,
+  __typename: 'Checkout'
+}
+
 type State = {
   menuOpen: boolean,
   bag: number,
-  checkout?: Object,
+  checkout?: CheckoutType,
   toggleMenu: Function,
   addToBag: Function
 }

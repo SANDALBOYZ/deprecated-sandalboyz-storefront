@@ -3,8 +3,16 @@ import React from 'react'
 import styled, { css } from 'react-emotion'
 import { get } from 'lodash'
 import { truncatePrice } from 'src/helpers'
+import {
+  PathContextType,
+  VariantType
+} from './ProductPageTemplate.types'
+// Apollo
+import { graphql as graphqlConnect } from 'react-apollo'
+import { checkoutLineItemsAdd } from 'src/api'
 // Components
 import Select from 'react-select'
+import { Context } from 'src/layouts/index'
 // Styles
 import { gray, grayLight } from 'src/theme'
 
@@ -34,7 +42,7 @@ const selectStyles = (injectedData: SelectStylesType): Object => ({
     width: '60%',
     height: '30px'
   }),
-  control: (base, { isFocused }) => ({
+  control: (_, { isFocused }) => ({
     display: 'flex',
     backgroundColor: 'white',
     height: '30px',
@@ -82,6 +90,7 @@ export const AddToCartButton = styled('button')`
     border-color: ${({ theme }) => theme.gray};
     background-color: ${({ theme }) => theme.gray};
   }
+  cursor: ${({ disabled }) => disabled ? 'not-allowed' : 'pointer'}
 `
 
 export const ProductDescription = styled('article')`
@@ -100,23 +109,37 @@ export const SizeChartButton = styled('button')`
   }
 `
 
-// `pathContext` comes from `gatsby-node.js`.
-type PathContextType ={
-  id: string,
-  handle: string,
-  title: string,
-  images: Array<Object>,
-  variants: Array<Object>
-}
-
-type ProductPageTemplateProps = {
+type Props = {
   pathContext: PathContextType
 }
 
-class ProductPageTemplate extends React.Component<ProductPageTemplateProps> {
+type State = {
+  variant: VariantType
+}
+
+class ProductPageTemplate extends React.Component<Props, State> {
+  state = {
+    variant: undefined
+  }
+
   selectControlWidth = () => (
     get(document.getElementsByClassName('react-select__control'), '[0].offsetWidth')
   )
+
+  setVariant = (variant: VariantType) => { this.setState({ variant }) }
+
+  addItemToCart = () => {
+    const variantId = this.state.variant.value.replace('Shopify__ProductVariant__', '')
+
+    this.props.checkoutLineItemsAdd({
+      variables: {
+        checkoutId: this.props.context.checkout.id,
+        lineItems: [{ variantId, quantity: 1 }]
+      }
+    }).then((res) => {
+      this.props.context.setCheckout(res.data.checkoutLineItemsAdd.checkout)
+    })
+  }
 
   render () {
     // TODO: Have dynamic currency.
@@ -142,15 +165,22 @@ class ProductPageTemplate extends React.Component<ProductPageTemplateProps> {
                 label: variant.title,
                 isDisabled: !variant.availableForSale
               }))}
-              // NOTE: `classNamePrefix` for debugging.
+              // NOTE: `classNamePrefix` is needed for `this.selectControlWidth`.
               classNamePrefix='react-select'
-              // menuIsOpen
+              onChange={this.setVariant}
+              value={this.state.variant}
               isSearchable={false}
               styles={selectStyles({
                 selectControlWidth: this.selectControlWidth()
               })}
+              simpleValue
             />
-            <AddToCartButton>Add To Cart</AddToCartButton>
+            <AddToCartButton
+              onClick={this.addItemToCart}
+              disabled={Boolean(!this.state.variant)}
+            >
+              Add To Cart
+            </AddToCartButton>
           </AddToCartContainer>
           <ProductDescription dangerouslySetInnerHTML={{ __html: pathContext.descriptionHtml }} />
           <SizeChartButton>Size Chart</SizeChartButton>
@@ -160,4 +190,10 @@ class ProductPageTemplate extends React.Component<ProductPageTemplateProps> {
   }
 }
 
-export default ProductPageTemplate
+export default graphqlConnect(
+  checkoutLineItemsAdd, { name: 'checkoutLineItemsAdd' }
+)(props => (
+  <Context.Consumer>
+    {context => <ProductPageTemplate {...props} context={context} />}
+  </Context.Consumer>
+))
