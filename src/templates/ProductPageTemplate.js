@@ -131,7 +131,7 @@ class ProductPageTemplate extends React.Component<Props, State> {
   setVariant = (variant: VariantType) => { this.setState({ variant }) }
 
   addItemToCart = () => {
-    const variantId = extractIdFromGatsbyId(get(this.state.variant, 'value'))
+    const variantId = extractIdFromGatsbyId(get(this.state.variant, 'value'), 'ProductVariant')
 
     this.props.checkoutLineItemsAdd({
       variables: {
