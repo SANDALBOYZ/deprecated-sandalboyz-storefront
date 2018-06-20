@@ -69,10 +69,6 @@ class App extends React.Component<Props, State> {
     }
   }
 
-  componentDidMount () {
-
-  }
-
   toggleMenu = () => {
     const { menuOpen } = this.state
 
