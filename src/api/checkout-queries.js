@@ -114,16 +114,6 @@ export function updateLineItemInCart (lineItemId, quantity) {
   })
 }
 
-export function removeLineItemInCart (lineItemId) {
-  this.props.checkoutLineItemsRemove(
-    { variables: { checkoutId: this.state.checkout.id, lineItemIds: [lineItemId] }
-    }).then((res) => {
-    this.setState({
-      checkout: res.data.checkoutLineItemsRemove.checkout
-    })
-  })
-}
-
 export function associateCustomerCheckout (customerAccessToken) {
   this.props.checkoutCustomerAssociate(
     { variables: { checkoutId: this.state.checkout.id, customerAccessToken: customerAccessToken }
