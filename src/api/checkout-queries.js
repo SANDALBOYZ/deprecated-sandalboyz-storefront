@@ -104,18 +104,6 @@ export const checkoutCustomerAssociate = gql`
   ${CheckoutFragment}
 `
 
-export function addVariantToCart (variantId, quantity) {
-  this.props.checkoutLineItemsAdd(
-    { variables: { checkoutId: this.state.checkout.id, lineItems: [{variantId, quantity: parseInt(quantity, 10)}] }
-    }).then((res) => {
-    this.setState({
-      checkout: res.data.checkoutLineItemsAdd.checkout
-    })
-  })
-
-  this.handleCartOpen()
-}
-
 export function updateLineItemInCart (lineItemId, quantity) {
   this.props.checkoutLineItemsUpdate(
     { variables: { checkoutId: this.state.checkout.id, lineItems: [{id: lineItemId, quantity: parseInt(quantity, 10)}] }
