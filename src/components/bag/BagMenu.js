@@ -35,6 +35,10 @@ export const BagMenuItemList = styled('ul')`
   margin: 0;
 `
 
+export const EmptyBag = styled('div')`
+  margin-bottom: 15px;
+`
+
 type BagMenuProps = {
   // context
   context: any,
@@ -64,7 +68,7 @@ class BagMenu extends React.Component<BagMenuProps> {
           <Divider />
           <BagMenuItemList>
             {isEmpty(lineItems)
-              ? <div>Your bag is empty.</div>
+              ? <EmptyBag>Your bag is empty.</EmptyBag>
               : lineItems.map(({ node }) => (
                 <BagMenuItem key={node.id} {...node} />
               ))
@@ -72,6 +76,7 @@ class BagMenu extends React.Component<BagMenuProps> {
           </BagMenuItemList>
           <div>Subtotal (Excluding Tax): {subtotalPrice} USD</div>
           <div>Checkout</div>
+          <div>Free shipping and free returns on all United States orders</div>
         </BagMenuContainer>
       </OutsideClickHandler>
     )

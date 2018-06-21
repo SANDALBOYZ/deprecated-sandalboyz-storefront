@@ -34,8 +34,8 @@ export const BagButtonContainer = styled('button')`
   height: 25px;
   background-color: ${({ theme, menuOpen }) => {
     return menuOpen
-      ? theme.grayLight
-      : theme.grayDark
+      ? theme.grayDark
+      : theme.gray
   }};
   border-radius: 50%;
   border: 0;
