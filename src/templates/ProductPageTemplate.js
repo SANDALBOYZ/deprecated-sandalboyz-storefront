@@ -151,6 +151,7 @@ class ProductPageTemplate extends React.Component<Props, State> {
     return (
       <div>
         {
+          // TODO: Create `ProductImageCarousel`.
           pathContext.images.map(image => (
             <img key={image.originalSrc} src={image.originalSrc} />
           ))
@@ -175,7 +176,6 @@ class ProductPageTemplate extends React.Component<Props, State> {
               styles={selectStyles({
                 selectControlWidth: this.selectControlWidth()
               })}
-              simpleValue
             />
             <AddToCartButton
               onClick={this.addItemToCart}
