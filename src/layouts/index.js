@@ -45,12 +45,15 @@ type Props = {
 type State = {
   menuOpen: boolean,
   bagOpen: boolean,
+  addedToCart: boolean,
   checkout?: CheckoutType,
   toggleMenu: Function,
   closeMenu: Function,
   toggleBag: Function,
   closeBag: Function,
-  setCheckout: Function
+  setCheckout: Function,
+  toggleAddedToCart: Function,
+  untoggleAddedToCart: Function
 }
 
 class App extends React.Component<Props, State> {
@@ -60,12 +63,15 @@ class App extends React.Component<Props, State> {
     this.state = {
       menuOpen: false,
       bagOpen: false,
+      addedToCart: false,
       checkout: undefined,
       toggleMenu: this.toggleMenu,
       closeMenu: this.closeMenu,
       toggleBag: this.toggleBag,
       closeBag: this.closeBag,
-      setCheckout: this.setCheckout
+      setCheckout: this.setCheckout,
+      toggleAddedToCart: this.toggleAddedToCart,
+      untoggleAddedToCart: this.untoggleAddedToCart
     }
   }
 
@@ -88,6 +94,10 @@ class App extends React.Component<Props, State> {
   setCheckout = (checkout: CheckoutType) => {
     this.setState({ checkout })
   }
+
+  toggleAddedToCart = () => { this.setState({ addedToCart: true }) }
+
+  untoggleAddedToCart = () => { this.setState({ addedToCart: false }) }
 
   render () {
     const { children, data } = this.props

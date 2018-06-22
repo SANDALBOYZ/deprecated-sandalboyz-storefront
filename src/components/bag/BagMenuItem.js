@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 // Apollo
 import { graphql as graphqlConnect } from 'react-apollo'
 import { checkoutLineItemsRemove } from 'src/api'
@@ -19,9 +19,41 @@ export const BagMenuItemTitle = styled('div')`
   font-size: 1.333rem;
 `
 
+export const BagMenuItemSubtitle = styled('div')`
+  color: ${({ theme }) => theme.grayLight};
+`
+
 export const RemoveButton = styled('button')`
   margin-left: 10px;
-  color: white;
+  color: ${({ theme }) => theme.grayLight};
+`
+
+export const QuantityContainer = styled('div')`
+  font-size: 1.4rem;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  align-content: center;
+`
+
+export const MinusSign = styled('span')`
+  &:before {
+    content: '-';
+    cursor: pointer;
+    margin-right: 5px;
+  }
+`
+
+export const PlusSign = styled('span')`
+  &:before {
+    content: '+';
+    cursor: pointer;
+    margin-left: 5px;
+  }
+`
+
+export const Price = styled('div')`
+  color: ${({ theme }) => theme.grayLight};
 `
 
 class BagMenuItem extends React.Component {
@@ -44,12 +76,16 @@ class BagMenuItem extends React.Component {
       <React.Fragment>
         <BagMenuItemContainer>
           <BagMenuItemTitle>{title}</BagMenuItemTitle>
-          <div>- {quantity} +</div>
-          <div>
+          <QuantityContainer>
+            <MinusSign />
+            {quantity}
+            <PlusSign />
+          </QuantityContainer>
+          <BagMenuItemSubtitle>
             <span>{variant.title}</span>
             <RemoveButton onClick={this.removeItem}>Remove</RemoveButton>
-          </div>
-          <div>{Number(variant.price) * quantity}</div>
+          </BagMenuItemSubtitle>
+          <Price>{Number(variant.price) * quantity}</Price>
         </BagMenuItemContainer>
         <Divider />
       </React.Fragment>

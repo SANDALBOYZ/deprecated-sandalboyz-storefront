@@ -39,6 +39,14 @@ export const EmptyBag = styled('div')`
   margin-bottom: 15px;
 `
 
+export const BagMenuItemContainer = styled('div')`
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 20px 15px;
+  grid-row-gap: 5px;
+  font-family: "adobe-caslon-pro";
+`
+
 type BagMenuProps = {
   // context
   context: any,

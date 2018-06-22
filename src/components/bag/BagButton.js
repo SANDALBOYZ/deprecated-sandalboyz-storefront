@@ -6,23 +6,24 @@ import { Context } from 'src/layouts/index'
 
 export const bagPop = keyframes`
   0% {
-    width: 25px;
-    height: 25px;
+    transform: scale(1);
   }
 
   80% {
-    width: 28px;
-    height: 28px;
+    transform: scale(1.2);
+  }
+
+  90% {
+    transform: scale(0.9);
   }
 
   100% {
-    width: 25px;
-    height: 25px;
+    transform: scale(1);
   }
 `
 
 export const addedToCartStyle = css`
-  animation: ${bagPop} 0.5s ease-in-out;
+  animation: ${bagPop} 0.3s ease-in-out;
 `
 
 export const BagButtonContainer = styled('button')`
@@ -32,11 +33,7 @@ export const BagButtonContainer = styled('button')`
   align-content: center;
   width: 25px;
   height: 25px;
-  background-color: ${({ theme, menuOpen }) => {
-    return menuOpen
-      ? theme.grayDark
-      : theme.gray
-  }};
+  background-color: ${({ theme }) => theme.grayDark};
   border-radius: 50%;
   border: 0;
   outline: 0;
@@ -52,32 +49,18 @@ const calculateQuantity = (edges: Array<Object>): number => (
   }, 0)
 )
 
-class BagButton extends React.Component {
-  state = {
-    addedToCart: false
-  }
-
-  addedToBagCallback = () => {
-  }
-
-  render () {
-    const { context } = this.props
-
-    return (
+const BagButton = () => (
+  <Context.Consumer>
+    {context =>
       <BagButtonContainer
         onClick={context.toggleBag}
-        menuOpen={context.menuOpen}
-        className={this.state.addedToCart ? addedToCartStyle : undefined}
-        onAnimationEnd={() => this.setState({ addedToCart: false })}
+        className={context.addedToCart ? addedToCartStyle : undefined}
+        onAnimationEnd={context.untoggleAddedToCart}
       >
         {calculateQuantity(get(context.checkout, 'lineItems.edges') || [])}
       </BagButtonContainer>
-    )
-  }
-}
-
-export default props => (
-  <Context.Consumer>
-    {context => <BagButton {...props} context={context} />}
+    }
   </Context.Consumer>
 )
+
+export default BagButton
