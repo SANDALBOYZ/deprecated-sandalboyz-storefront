@@ -18,7 +18,7 @@ export const BagMenuContainer = styled('aside')`
   right: ${({ isOpen }) => isOpen ? 0 : '-80%'};
   height: 100vh;
   width: 80%;
-  background-color: ${({ theme }) => theme.gray};
+  background-color: ${({ theme }) => theme.slate};
   transition: right 0.45s ease-in-out 0.05s;
   z-index: 1000;
   color: white;
@@ -45,6 +45,32 @@ export const BagMenuItemContainer = styled('div')`
   grid-template-rows: 20px 15px;
   grid-row-gap: 5px;
   font-family: "adobe-caslon-pro";
+`
+
+export const SubtotalContainer = styled('div')`
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 20px 15px;
+  grid-row-gap: 5px;
+  font-family: "adobe-caslon-pro";
+`
+
+export const CheckoutButton = styled('button')`
+  width: 80%;
+  height: 30px;
+  margin: 1em 0;
+  background-color: white;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-weight: bold;
+  &:hover {
+    background-color: rgba(255,255,255,0.5);
+  }
+`
+
+export const FreeShip = styled('div')`
+  font-size: 0.6em;
+  color: ${({ theme }) => theme.grayLight};
 `
 
 type BagMenuProps = {
@@ -82,9 +108,16 @@ class BagMenu extends React.Component<BagMenuProps> {
               ))
             }
           </BagMenuItemList>
-          <div>Subtotal (Excluding Tax): {subtotalPrice} USD</div>
-          <div>Checkout</div>
-          <div>Free shipping and free returns on all United States orders</div>
+          <SubtotalContainer>
+            <div>
+              Subtotal (Excluding Tax):
+            </div>
+            <div>
+              {subtotalPrice} USD
+            </div>
+          </SubtotalContainer>
+          <CheckoutButton>Checkout</CheckoutButton>
+          <FreeShip>Free shipping and free returns on all United States orders.</FreeShip>
         </BagMenuContainer>
       </OutsideClickHandler>
     )

@@ -25,7 +25,7 @@ export const AppWrapper = styled('div')`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.50);
+    background-color: rgba(0,0,0,0.45);
     z-index: 900;
     opacity: ${({ bagOpen }) => bagOpen ? 1 : 0};
     visibility: ${({ bagOpen }) => bagOpen ? 'visible' : 'hidden'};
