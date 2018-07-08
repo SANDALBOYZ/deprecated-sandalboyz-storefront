@@ -86,6 +86,9 @@ class Header extends React.Component<Props, State> {
   }
 
   componentDidMount () {
+    // This is causing a warning:
+    // Warning: Can't call setState (or forceUpdate) on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
+    // Fix eventually... lol.
     this.setState({ yPosition: window.scrollY })
 
     document.addEventListener('scroll', () => {
