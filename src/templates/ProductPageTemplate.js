@@ -11,10 +11,17 @@ import type {
 import { graphql as graphqlConnect } from 'react-apollo'
 import { checkoutLineItemsAdd } from 'src/api'
 // Components
+import Slider from 'react-slick'
 import Select from 'react-select'
 import { Context } from 'src/layouts/index'
 // Styles
 import { gray, grayLight } from 'src/theme'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+export const sliderContainer = css`
+  margin-bottom: 50px;
+`
 
 export const container = css`
   padding: 0 5px;
@@ -153,12 +160,20 @@ class ProductPageTemplate extends React.Component<Props, State> {
 
     return (
       <div>
-        {
-          // TODO: Create `ProductImageCarousel`.
-          pathContext.images.map(image => (
-            <img key={image.originalSrc} src={image.originalSrc} />
-          ))
-        }
+        <Slider
+          className={sliderContainer}
+          dots
+          infinite
+          speed={500}
+          slidesToShow={1}
+          slidesToScroll={1}
+        >
+          {
+            pathContext.images.map(image => (
+              <img key={image.originalSrc} src={image.originalSrc} />
+            ))
+          }
+        </Slider>
         <div className={container}>
           <ProductTitleContainer>
             <ProductTitle>{pathContext.title}</ProductTitle>

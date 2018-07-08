@@ -46,6 +46,8 @@
     "react-helmet": "^5.2.0",
     "react-outside-click-handler": "^1.0.0",
     "react-select": "^2.0.0-beta.6",
+    "react-slick": "^0.23.1",
+    "slick-carousel": "^1.8.1",
     "typography": "^0.16.17"
   },
   "devDependencies": {
