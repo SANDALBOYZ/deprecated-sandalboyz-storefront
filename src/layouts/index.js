@@ -14,7 +14,7 @@ import { ThemeProvider } from 'emotion-theming'
 import * as theme from 'src/theme'
 import 'src/styles'
 
-export const Context = React.createContext()
+export const Context: Object = React.createContext()
 
 export const AppWrapper = styled('div')`
   &:before {

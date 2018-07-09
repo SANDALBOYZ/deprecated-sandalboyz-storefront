@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 // Apollo
 import { graphql as graphqlConnect } from 'react-apollo'
 import { checkoutLineItemsRemove } from 'src/api'
@@ -56,7 +56,19 @@ export const Price = styled('div')`
   color: ${({ theme }) => theme.grayLight};
 `
 
-class BagMenuItem extends React.Component {
+type Props = {
+  // ownProps
+  context: Object,
+  id: string | number,
+  title: string,
+  quantity: number,
+  variant: { title: string, price: string },
+
+  // graphql
+  checkoutLineItemsRemove: Function
+}
+
+class BagMenuItem extends React.Component<Props> {
   removeItem = () => {
     const { context, id } = this.props
 

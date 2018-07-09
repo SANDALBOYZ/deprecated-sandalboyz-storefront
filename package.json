@@ -54,7 +54,8 @@
     "babel-eslint": "^8.2.3",
     "eslint-plugin-emotion": "^9.1.0",
     "eslint-plugin-flowtype": "^2.49.3",
-    "flow-bin": "^0.73.0",
+    "flow-bin": "^0.76.0",
+    "jest": "^23.3.0",
     "prettier": "^1.12.0",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1"
