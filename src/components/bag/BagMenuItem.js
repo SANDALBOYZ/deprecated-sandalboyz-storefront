@@ -2,8 +2,14 @@
 import React from 'react'
 import styled from 'react-emotion'
 // Apollo
-import { graphql as graphqlConnect } from 'react-apollo'
-import { checkoutLineItemsRemove } from 'src/api'
+import {
+  compose,
+  graphql as graphqlConnect
+} from 'react-apollo'
+import {
+  checkoutLineItemsRemove,
+  checkoutLineItemsUpdate
+} from 'src/api'
 import { Context } from 'src/layouts/index'
 import Divider from './Divider'
 
@@ -41,6 +47,7 @@ export const MinusSign = styled('span')`
     content: '-';
     cursor: pointer;
     margin-right: 5px;
+    color: ${({ theme }) => theme.grayLight};
   }
 `
 
@@ -49,6 +56,7 @@ export const PlusSign = styled('span')`
     content: '+';
     cursor: pointer;
     margin-left: 5px;
+    color: ${({ theme }) => theme.grayLight};
   }
 `
 
@@ -81,6 +89,31 @@ class BagMenuItem extends React.Component<Props> {
     })
   }
 
+  decrementItem = () => {
+    const { context, id } = this.props
+
+    console.log(context.checkout)
+    console.log(id)
+  }
+
+  incrementItem = () => {
+    const { context, id } = this.props
+
+    const lineItem = context.checkout.lineItems.edges.find(edge => edge.node.id === id).node
+
+    lineItem.quantity += 1
+
+    // TODO: pick off properties for proper https://help.shopify.com/en/api/custom-storefronts/storefront-api/reference/input_object/checkoutlineitemupdateinput
+
+    this.props.checkoutLineItemsUpdate({
+      variables: { checkoutId: context.checkout.id, lineItems: [lineItem] }
+    }).then((res) => {
+      context.setCheckout(
+        res.data.checkoutLineItemsRemove.checkout
+      )
+    })
+  }
+
   render () {
     const { title, quantity, variant } = this.props
 
@@ -89,9 +122,9 @@ class BagMenuItem extends React.Component<Props> {
         <BagMenuItemContainer>
           <BagMenuItemTitle>{title}</BagMenuItemTitle>
           <QuantityContainer>
-            <MinusSign />
+            <MinusSign onClick={this.decrementItem} />
             {quantity}
-            <PlusSign />
+            <PlusSign onClick={this.incrementItem} />
           </QuantityContainer>
           <BagMenuItemSubtitle>
             <span>{variant.title}</span>
@@ -105,8 +138,9 @@ class BagMenuItem extends React.Component<Props> {
   }
 }
 
-export default graphqlConnect(
-  checkoutLineItemsRemove, { name: 'checkoutLineItemsRemove' }
+export default compose(
+  graphqlConnect(checkoutLineItemsRemove, { name: 'checkoutLineItemsRemove' }),
+  graphqlConnect(checkoutLineItemsUpdate, { name: 'checkoutLineItemsUpdate' })
 )(props => (
   <Context.Consumer>
     {context => <BagMenuItem {...props} context={context} />}
