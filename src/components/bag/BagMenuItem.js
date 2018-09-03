@@ -1,9 +1,15 @@
 // @flow
 import React from 'react'
-import styled, { css } from 'react-emotion'
+import styled from 'react-emotion'
 // Apollo
-import { graphql as graphqlConnect } from 'react-apollo'
-import { checkoutLineItemsRemove } from 'src/api'
+import {
+  compose,
+  graphql as graphqlConnect
+} from 'react-apollo'
+import {
+  checkoutLineItemsRemove,
+  checkoutLineItemsUpdate
+} from 'src/api'
 import { Context } from 'src/layouts/index'
 import Divider from './Divider'
 
@@ -41,6 +47,7 @@ export const MinusSign = styled('span')`
     content: '-';
     cursor: pointer;
     margin-right: 5px;
+    color: ${({ theme }) => theme.grayLight};
   }
 `
 
@@ -49,6 +56,7 @@ export const PlusSign = styled('span')`
     content: '+';
     cursor: pointer;
     margin-left: 5px;
+    color: ${({ theme }) => theme.grayLight};
   }
 `
 
@@ -56,7 +64,30 @@ export const Price = styled('div')`
   color: ${({ theme }) => theme.grayLight};
 `
 
-class BagMenuItem extends React.Component {
+type OwnProps = {
+  context: Object,
+  id: string | number, // `id` is passed from an interator in `BagMenu`.
+  title: string,
+  quantity: number,
+  variant: { title: string, price: string }
+}
+
+type PropsFromApollo = {
+  checkoutLineItemsRemove: Function,
+  checkoutLineItemsUpdate: Function
+}
+
+type Props = OwnProps & PropsFromApollo
+
+type State = {
+  diabled: boolean
+}
+
+class BagMenuItem extends React.Component<Props, State> {
+  state = {
+    disabled: false
+  }
+
   removeItem = () => {
     const { context, id } = this.props
 
@@ -69,17 +100,71 @@ class BagMenuItem extends React.Component {
     })
   }
 
+  // TODO: DRY decrement and increment.
+  decrementItem = () => {
+    const { context, id } = this.props
+
+    const lineItem = context.checkout.lineItems.edges.find(edge => edge.node.id === id).node
+
+    const updatedLineItem = {
+      id: lineItem.id,
+      quantity: lineItem.quantity - 1,
+      variantId: lineItem.variant.id
+    }
+
+    this.setState({ disabled: true })
+
+    this.props.checkoutLineItemsUpdate({
+      variables: { checkoutId: context.checkout.id, lineItems: [updatedLineItem] }
+    }).then((res) => {
+      this.setState({ disabled: false })
+      context.setCheckout(
+        res.data.checkoutLineItemsUpdate.checkout
+      )
+    })
+  }
+
+  incrementItem = () => {
+    const { context, id } = this.props
+
+    const lineItem = context.checkout.lineItems.edges.find(edge => edge.node.id === id).node
+
+    const updatedLineItem = {
+      id: lineItem.id,
+      quantity: lineItem.quantity + 1,
+      variantId: lineItem.variant.id
+    }
+
+    this.setState({ disabled: true })
+
+    this.props.checkoutLineItemsUpdate({
+      variables: { checkoutId: context.checkout.id, lineItems: [updatedLineItem] }
+    }).then((res) => {
+      this.setState({ disabled: false })
+      context.setCheckout(
+        res.data.checkoutLineItemsUpdate.checkout
+      )
+    })
+  }
+
   render () {
     const { title, quantity, variant } = this.props
+    const { disabled } = this.state
 
     return (
       <React.Fragment>
         <BagMenuItemContainer>
           <BagMenuItemTitle>{title}</BagMenuItemTitle>
           <QuantityContainer>
-            <MinusSign />
-            {quantity}
-            <PlusSign />
+            <MinusSign
+              disabled={disabled}
+              onClick={disabled ? null : this.decrementItem}
+            />
+            {disabled ? 'Updating...' : quantity}
+            <PlusSign
+              disabled={disabled}
+              onClick={disabled ? null : this.incrementItem}
+            />
           </QuantityContainer>
           <BagMenuItemSubtitle>
             <span>{variant.title}</span>
@@ -93,8 +178,9 @@ class BagMenuItem extends React.Component {
   }
 }
 
-export default graphqlConnect(
-  checkoutLineItemsRemove, { name: 'checkoutLineItemsRemove' }
+export default compose(
+  graphqlConnect(checkoutLineItemsRemove, { name: 'checkoutLineItemsRemove' }),
+  graphqlConnect(checkoutLineItemsUpdate, { name: 'checkoutLineItemsUpdate' })
 )(props => (
   <Context.Consumer>
     {context => <BagMenuItem {...props} context={context} />}

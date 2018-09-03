@@ -39,14 +39,6 @@ export const EmptyBag = styled('div')`
   margin-bottom: 15px;
 `
 
-export const BagMenuItemContainer = styled('div')`
-  display: grid;
-  grid-template-columns: 7fr 3fr;
-  grid-template-rows: 20px 15px;
-  grid-row-gap: 5px;
-  font-family: "adobe-caslon-pro";
-`
-
 export const SubtotalContainer = styled('div')`
   display: grid;
   grid-template-columns: 7fr 3fr;
@@ -66,6 +58,7 @@ export const CheckoutButton = styled('button')`
   &:hover {
     background-color: rgba(255,255,255,0.5);
   }
+  cursor: ${({ disabled }) => disabled ? 'not-allowed' : 'pointer'};
 `
 
 export const FreeShip = styled('div')`
@@ -82,12 +75,19 @@ type BagMenuProps = {
 }
 
 class BagMenu extends React.Component<BagMenuProps> {
+  // NOTE: Shopify `checkout` object is created when this component mounts!
+  // I'm not fully happy with this. We'll figure out a better solution later.
   componentDidMount () {
     this.props.createCheckout({
       variables: { input: {} }
     }).then((res) => {
       this.props.context.setCheckout(res.data.checkoutCreate.checkout)
     })
+  }
+
+  openCheckout = () => {
+    const { context } = this.props
+    window.open(context.checkout.webUrl)
   }
 
   render () {
@@ -116,7 +116,12 @@ class BagMenu extends React.Component<BagMenuProps> {
               {subtotalPrice} USD
             </div>
           </SubtotalContainer>
-          <CheckoutButton>Checkout</CheckoutButton>
+          <CheckoutButton
+            onClick={this.openCheckout}
+            disabled={isEmpty(lineItems)}
+          >
+            Checkout
+          </CheckoutButton>
           <FreeShip>Free shipping and free returns on all United States orders.</FreeShip>
         </BagMenuContainer>
       </OutsideClickHandler>
