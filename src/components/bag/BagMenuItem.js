@@ -64,19 +64,30 @@ export const Price = styled('div')`
   color: ${({ theme }) => theme.grayLight};
 `
 
-type Props = {
-  // ownProps
+type OwnProps = {
   context: Object,
-  id: string | number,
+  id: string | number, // `id` is passed from an interator in `BagMenu`.
   title: string,
   quantity: number,
-  variant: { title: string, price: string },
-
-  // graphql
-  checkoutLineItemsRemove: Function
+  variant: { title: string, price: string }
 }
 
-class BagMenuItem extends React.Component<Props> {
+type PropsFromApollo = {
+  checkoutLineItemsRemove: Function,
+  checkoutLineItemsUpdate: Function
+}
+
+type Props = OwnProps & PropsFromApollo
+
+type State = {
+  diabled: boolean
+}
+
+class BagMenuItem extends React.Component<Props, State> {
+  state = {
+    disabled: false
+  }
+
   removeItem = () => {
     const { context, id } = this.props
 
@@ -89,11 +100,28 @@ class BagMenuItem extends React.Component<Props> {
     })
   }
 
+  // TODO: DRY decrement and increment.
   decrementItem = () => {
     const { context, id } = this.props
 
-    console.log(context.checkout)
-    console.log(id)
+    const lineItem = context.checkout.lineItems.edges.find(edge => edge.node.id === id).node
+
+    const updatedLineItem = {
+      id: lineItem.id,
+      quantity: lineItem.quantity - 1,
+      variantId: lineItem.variant.id
+    }
+
+    this.setState({ disabled: true })
+
+    this.props.checkoutLineItemsUpdate({
+      variables: { checkoutId: context.checkout.id, lineItems: [updatedLineItem] }
+    }).then((res) => {
+      this.setState({ disabled: false })
+      context.setCheckout(
+        res.data.checkoutLineItemsUpdate.checkout
+      )
+    })
   }
 
   incrementItem = () => {
@@ -101,30 +129,42 @@ class BagMenuItem extends React.Component<Props> {
 
     const lineItem = context.checkout.lineItems.edges.find(edge => edge.node.id === id).node
 
-    lineItem.quantity += 1
+    const updatedLineItem = {
+      id: lineItem.id,
+      quantity: lineItem.quantity + 1,
+      variantId: lineItem.variant.id
+    }
 
-    // TODO: pick off properties for proper https://help.shopify.com/en/api/custom-storefronts/storefront-api/reference/input_object/checkoutlineitemupdateinput
+    this.setState({ disabled: true })
 
     this.props.checkoutLineItemsUpdate({
-      variables: { checkoutId: context.checkout.id, lineItems: [lineItem] }
+      variables: { checkoutId: context.checkout.id, lineItems: [updatedLineItem] }
     }).then((res) => {
+      this.setState({ disabled: false })
       context.setCheckout(
-        res.data.checkoutLineItemsRemove.checkout
+        res.data.checkoutLineItemsUpdate.checkout
       )
     })
   }
 
   render () {
     const { title, quantity, variant } = this.props
+    const { disabled } = this.state
 
     return (
       <React.Fragment>
         <BagMenuItemContainer>
           <BagMenuItemTitle>{title}</BagMenuItemTitle>
           <QuantityContainer>
-            <MinusSign onClick={this.decrementItem} />
-            {quantity}
-            <PlusSign onClick={this.incrementItem} />
+            <MinusSign
+              disabled={disabled}
+              onClick={disabled ? null : this.decrementItem}
+            />
+            {disabled ? 'Updating...' : quantity}
+            <PlusSign
+              disabled={disabled}
+              onClick={disabled ? null : this.incrementItem}
+            />
           </QuantityContainer>
           <BagMenuItemSubtitle>
             <span>{variant.title}</span>
