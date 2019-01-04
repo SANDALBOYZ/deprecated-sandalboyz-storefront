@@ -10,7 +10,7 @@ module.exports = {
       resolve: 'gatsby-source-shopify',
       options: {
         shopName: 'sandalboyz-2',
-        accessToken: 'a6a2961ca8f4beaf87aedf3d74c38114',
+        accessToken: process.env.SHOPIFY_ACCESS_TOKEN,
         verbose: true
       }
     }
